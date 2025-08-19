@@ -1,6 +1,20 @@
-annocorrente=int(input("in che anno stai facendo questo test? ▶"))
-eta=annocorrente - int(input('in che anno sei nato?▶'))
-numero=int(input("qual'e' il tuo numero preferito?"))
+annocorrente=int(input(
+"in che anno stai facendo questo test?▶ "))
+
+eta=annocorrente - int(input(
+"in che anno sei nato?▶ "))
+
+Carattere = input (
+"ti ritieni una persona ottimista?")
+if Carattere == "Si" or Carattere == "s":
+  Carattere = True
+elif Carattere == "No" or Carattere =="n":
+  Carattere = False
+else:
+  Carattere = input (
+"puoi rispondere solo si o no alla domanda precedente ")
+
+
 y=0 if input("sei maschio o femmina?[m/f]") =='f' else 1
 traquantianni=int(input('quanti anni avrai nel...▶'
 )) - annocorrente
