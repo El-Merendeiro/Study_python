@@ -17,6 +17,6 @@ print ("scegli al mio tre")
 import time
 for t in range (3,0,-1):
         print (t,end='\r', flush=True)
-        time.sleep(2)
+        time.sleep(1.5)
 
 valore_player = input ("cosa scegli?▷▶ ")
