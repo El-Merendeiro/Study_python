@@ -42,10 +42,44 @@ elif scelta_player == "Carta" or scelta == "carta" or scelta == "CARTA":
 elif scelta_player == "Forbice" or scelta == "forbice" or scelta == "Forbici" or scelta == "forbici":
   valore_player = 3
 
+score_player = 0
+score_bot = 0
+
 while valore_player == valore_bot:
   print (f"anche io ho scelto {scelta_player}")
   print ("pareggio riproviamo")
   scelta_player = input ("proviamo ancora▷▶ ")
   valore_bot = random.choice(opzioni)
-else:
-  print ("fine")
+
+if valore_bot == 1:
+  print ("io ho scelto sasso")
+elif valore_bot == 2:
+  print ("io ho scelto carta")
+elif valore_bot == 3:
+  print ("io ho scelto forbice")
+
+
+#bot=sasso/player=forbici
+if valore_bot == 1 and valore_player == 3:
+  print ("sasso batte forbici")
+  print ("sara per la prossima partita")
+#bot=sasso/player=carta
+elif valore_bot == 1 and valore_player == 2:
+  print ("carta batte sasso")
+  print ("voglio la rivincita subito!!")
+#bot=carta/player=sasso
+elif valore_bot == 2 and valore_player == 1:
+  print ("carta batte sasso")
+  print ("sara per la prossima partita")
+#bot=carta/player=forbici
+elif valore_bot == 2 and valore_player == 3:
+  print ("forbice batte carta")
+  print ("voglio la rivincita subito!!")
+#bot=forbici/player=sasso
+elif valore_bot == 3 and valore_player == 1:
+  print ("sasso batte forbici")
+  print ("voglio la rivincita subito!!")
+#bot=forbici/player=carta
+elif valore_bot == 3 and valore_player == 2:
+  print ("forbice batte carta")
+  print ("sara per la prossima partita")
