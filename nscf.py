@@ -58,28 +58,39 @@ elif valore_bot == 2:
 elif valore_bot == 3:
   print ("io ho scelto forbice")
 
-
+def gioca():
 #bot=sasso/player=forbici
-if valore_bot == 1 and valore_player == 3:
-  print ("sasso batte forbici")
-  print ("sara per la prossima partita")
+  if valore_bot == 1 and valore_player == 3:
+    print ("sasso batte forbici")
+    score_bot += 1
 #bot=sasso/player=carta
-elif valore_bot == 1 and valore_player == 2:
-  print ("carta batte sasso")
-  print ("voglio la rivincita subito!!")
+  elif valore_bot == 1 and valore_player == 2:
+    print ("carta batte sasso")
+    score_player += 1
 #bot=carta/player=sasso
-elif valore_bot == 2 and valore_player == 1:
-  print ("carta batte sasso")
-  print ("sara per la prossima partita")
+  elif valore_bot == 2 and valore_player == 1:
+    print ("carta batte sasso")
+    score_bot += 1
 #bot=carta/player=forbici
-elif valore_bot == 2 and valore_player == 3:
-  print ("forbice batte carta")
-  print ("voglio la rivincita subito!!")
+  elif valore_bot == 2 and valore_player == 3:
+    print ("forbice batte carta")
+    score_player += 1
 #bot=forbici/player=sasso
-elif valore_bot == 3 and valore_player == 1:
-  print ("sasso batte forbici")
-  print ("voglio la rivincita subito!!")
+  elif valore_bot == 3 and valore_player == 1:
+    print ("sasso batte forbici")
+    score_player += 1
 #bot=forbici/player=carta
-elif valore_bot == 3 and valore_player == 2:
-  print ("forbice batte carta")
-  print ("sara per la prossima partita")
+  elif valore_bot == 3 and valore_player == 2:
+    print ("forbice batte carta")
+    score_bot += 1
+
+while score_player < 3 or score_bot < 3:
+  gioca ()
+  print (f"siamo io a {score_bot} e tu a {scoreplayer} continuiamo")
+
+if player_score == 3:
+  print (f"complimenti hai vinto {score_player} a {score_bot}")
+  print ("voglio la rivincita")
+else:
+  print (f"questa partita l'ho vinta io {score_bot} a {score_player}")
+  print ("posso darti la rivincita quando vuoi")
