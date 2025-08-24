@@ -35,11 +35,11 @@ while scelta_player not in scelte:
 else:
   print (f"hai scelto {scelta_player}")
 
-if scelta_player == "sasso" or scelta == "Sasso" or scelta == "SASSO":
+if scelta_player == "sasso" or scelta_player == "Sasso" or scelta_player == "SASSO":
   valore_player = 1
-elif scelta_player == "Carta" or scelta == "carta" or scelta == "CARTA":
+elif scelta_player == "Carta" or scelta_player == "carta" or scelta_player == "CARTA":
   valore_player = 2
-elif scelta_player == "Forbice" or scelta == "forbice" or scelta == "Forbici" or scelta == "forbici":
+elif scelta_player == "Forbice" or scelta_player == "forbice" or scelta_player == "Forbici" or scelta_player == "forbici":
   valore_player = 3
 
 score_player = 0
@@ -59,6 +59,8 @@ elif valore_bot == 3:
   print ("io ho scelto forbice")
 
 def gioca():
+  global score_player
+  global score_bot
 #bot=sasso/player=forbici
   if valore_bot == 1 and valore_player == 3:
     print ("sasso batte forbici")
@@ -86,9 +88,9 @@ def gioca():
 
 while score_player < 3 or score_bot < 3:
   gioca ()
-  print (f"siamo io a {score_bot} e tu a {scoreplayer} continuiamo")
+#  print (f"siamo io a {score_bot} e tu a {score_player} continuiamo")
 
-if player_score == 3:
+if score_player == 3:
   print (f"complimenti hai vinto {score_player} a {score_bot}")
   print ("voglio la rivincita")
 else:
