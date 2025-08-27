@@ -8,12 +8,15 @@ per uscire: \033[47;30mexit\033[0m\n\n")
 #variabili
 
 option = ["adv","dsv"]
-dice_choice = ()
-dice_option = ()
-roll_option = ()
-dice_number = ()
-dice_face = ()
-
+dice_choice = ""
+dice_option = ""
+roll_option = ""
+dice_number = 0
+dice_face = 0
+#help
+def show_help ():
+  print ("Digita il numero di dadi da lanciare,\
+seguito da 'd' e poi il numero di facce del dado")
 #input check e main split
 while True:
   player_choice = input (">>---> ").split () #main split
@@ -35,9 +38,11 @@ or len(player_choice[2]) < 3:
   else:
     break
 
+#split secondario per informazione dadi
 dice_choice,dice_option,roll_option = player_choice
+dice_choice = dice_choice.split ("d")
 dice_number = int(dice_choice [0])
-dice_face = int(dice_choice [2])
+dice_face = int(dice_choice [1])
 
 print (dice_choice)
 print (dice_option)
@@ -45,3 +50,4 @@ print (roll_option)
 print (player_choice)
 print (dice_number)
 print (dice_face)
+show_help ()
