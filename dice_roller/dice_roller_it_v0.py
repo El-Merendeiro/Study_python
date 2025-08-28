@@ -1,4 +1,6 @@
 #questo sara' un dice roller per qualsiasi gioco da di ruolo o da tavola
+import random
+
 
 print ("\n\nBenvenuto in \033[1;41;37mRolly\033[0m\n\n\
 Digita il numero di dadi e le facce.\nEsempio: \033[47;30m3d6\033[0m tre dadi da sei facce\n\
@@ -12,7 +14,6 @@ mode = ["help","exit","risiko"]
 dice_choice = ""
 dice_option = ""
 roll_option = ""
-
 
 #definizione della funzione show_help
 def show_help ():
@@ -68,6 +69,15 @@ or not dice_choice[1].isdigit():
 dice_choice, dice_option, roll_option, player_choice, dice_number, dice_face = user_input()
 #fine input
 
+def simple_roll ():
+  dice_pos =[]
+  for t in range (1,dice_face+1):
+    dice_pos += [t]
+  result = [random.choice (dice_pos) for _ in range (dice_number)]
+  return result,dice_pos
+result,dice_pos = simple_roll ()
+
+
 print (dice_choice)
 print (dice_option)
 print (roll_option)
@@ -75,3 +85,7 @@ print (player_choice)
 if dice_number !=0:
   print (dice_number)
   print (dice_face)
+simple_roll ()
+print (dice_pos)
+print (result)
+
