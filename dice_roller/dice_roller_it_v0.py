@@ -8,12 +8,13 @@ Opzioni digita: \033[47;30mhelp\033[0m, \
 per uscire: \033[47;30mexit\033[0m\n\n")
 
 #variabili principali
-list_dice_option = ["null","adv","dsv"]
-list_roll_option = ["null","ropt1","ropt2"]
+list_dice_option = ["null","max","min","add","notver"]
+list_roll_option = ["null","notver"]
 mode = ["help","exit","risiko"]
 dice_choice = ""
 dice_option = ""
 roll_option = ""
+result =[]
 
 #definizione della funzione show_help
 def show_help ():
@@ -29,6 +30,10 @@ def user_input ():
 #main input
   while True:
     player_choice = input (">>---> ").lower ().split () #main split
+#gestione comando exit
+    if "exit" in player_choice:
+      print("Uscita dal programma. Arrivederci!")
+      exit()
 #check numero parole e aggiunta se mancano
     if len(player_choice) == 1:
       player_choice.append ("null")
@@ -66,32 +71,63 @@ or not dice_choice[1].isdigit():
       dice_face = int(dice_choice [1])
       break
   return dice_choice, dice_option, roll_option, player_choice, dice_number, dice_face
-dice_choice, dice_option, roll_option, player_choice, dice_number, dice_face = user_input()
 #fine input
 
+#definizione funzione roll
 def simple_roll ():
   dice_pos =[]
   for t in range (1,dice_face+1):
     dice_pos += [t]
   result = [random.choice (dice_pos) for _ in range (dice_number)]
-  return result,dice_pos
-result,dice_pos = simple_roll ()
+#max_roll
+  max_roll = result[0]
+  for n in result:
+    if n > max_roll:
+      max_roll = n
+#min_roll
+  min_roll = result[0]
+  for m in result:
+    if m < min_roll:
+      min_roll = m
+#add_roll
+  add_roll = 0
+  for a in result:
+    add_roll += a
+  return max_roll,result,dice_pos, min_roll, add_roll
+#fine roll
 
+#main output
+while True:
+  dice_choice, dice_option, roll_option, player_choice, dice_number, dice_face = user_input()
+  max_roll, result, dice_pos, min_roll,add_roll = simple_roll ()
+  if dice_option == "null" and roll_option == "null":
+    print (f"il risultato di \033[47;30m{player_choice[0]}\033[0m e' {result}")
+  if dice_option == "max" and roll_option == "null":
+    print (f"il risultato di \033[47;30m{player_choice[0]} {player_choice[1]}\033[0m e'{result} --> \033[41;30m{max_roll}\033[0m")
+  if dice_option == "min" and roll_option == "null":
+    print (f"il risultato di \033[47;30m{player_choice[0]} {player_choice[1]}\033[0m e'{result} --> \033[41;30m{min_roll}\033[0m")
+  if dice_option == "add" and roll_option == "null":
+    print (f"il risultato di \033[47;30m{player_choice[0]} {player_choice[1]}\033[0m e'{result} --> \033[41;30m{add_roll}\033[0m")
+  if dice_option == "notver" and roll_option =="null":
+    print (result)
+  if dice_option == "max" and roll_option =="notver":
+    print (max_roll)
+  if dice_option == "min" and roll_option =="notver":
+    print (min_roll)
+  if dice_option == "add" and roll_option =="notver":
+    print (add_roll)
 
-
-
-
-
-print (dice_choice)
-print (dice_option)
-print (roll_option)
-print (player_choice)
-if dice_number !=0:
-  print (dice_number)
-  print (dice_face)
-simple_roll ()
-print (dice_pos)
-
-if dice_option == "null" and roll_option == "null":
-  print (f"il risultato di \033[47;30m{player_choice[0]}\033[0m e' {result}")
-user_input ()
+##debugging check variabili
+#print ("\n\n\n")
+#print ("dice_choice",dice_choice)
+#print ("dice_option",dice_option)
+#print ("roll_option",roll_option)
+#print ("player_choice",player_choice)
+#if dice_number !=0:
+#  print (dice_number)
+#  print (dice_face)
+#print ("dice_pos",dice_pos)
+#print ("max",max_roll)
+#print ("result",result)
+#print ("min",min_roll)
+#print ("ADD",add_roll)
