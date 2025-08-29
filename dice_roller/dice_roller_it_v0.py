@@ -78,6 +78,10 @@ def simple_roll ():
 result,dice_pos = simple_roll ()
 
 
+
+
+
+
 print (dice_choice)
 print (dice_option)
 print (roll_option)
@@ -87,5 +91,7 @@ if dice_number !=0:
   print (dice_face)
 simple_roll ()
 print (dice_pos)
-print (result)
 
+if dice_option == "null" and roll_option == "null":
+  print (f"il risultato di \033[47;30m{player_choice[0]}\033[0m e' {result}")
+user_input ()
