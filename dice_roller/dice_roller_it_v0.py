@@ -34,6 +34,9 @@ def user_input ():
     if "exit" in player_choice:
       print("Uscita dal programma. Arrivederci!")
       exit()
+    if "risiko" in player_choice:
+      print ("modalita risiko")
+      risiko_roll ()
 #check numero parole e aggiunta se mancano
     if len(player_choice) == 1:
       player_choice.append ("null")
@@ -41,7 +44,7 @@ def user_input ():
     elif len(player_choice) == 2:
       player_choice.append ("null")
     elif len(player_choice) == 0:
-      print ("Digita \033[47;30mhelp\033[0m  per aiuto")
+      print ("Digita \033[47;30mhelp\033[0m per aiuto")
       continue
 #check massimo 3 parole e massimo 3 caratteri
 #check opzioni
@@ -96,6 +99,16 @@ def simple_roll ():
   return max_roll,result,dice_pos, min_roll, add_roll
 #fine roll
 
+#input eroll per risiko
+def risiko_roll ():
+  while True:
+    player_choice_ris = input ("︻デ┳═ー ").lower ().split ()
+
+
+ # dice_pos =[]
+  #  for t in range (1,dice_face+1):
+   # dice_pos += [t]
+  #result = [random.choice (dice_pos) for _ in r
 #main output
 while True:
   dice_choice, dice_option, roll_option, player_choice, dice_number, dice_face = user_input()
@@ -116,6 +129,7 @@ while True:
     print (min_roll)
   if dice_option == "add" and roll_option =="notver":
     print (add_roll)
+
 
 ##debugging check variabili
 #print ("\n\n\n")
