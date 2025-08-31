@@ -103,8 +103,9 @@ def simple_roll ():
 def risiko_roll ():
   while True:
     player_choice_ris = input ("︻デ┳═ー ").lower ().split ()
-
-
+    if "exit" in player_choice_ris:
+      print ("uscita risiko")
+      return
  # dice_pos =[]
   #  for t in range (1,dice_face+1):
    # dice_pos += [t]
@@ -112,6 +113,8 @@ def risiko_roll ():
 #main output
 while True:
   dice_choice, dice_option, roll_option, player_choice, dice_number, dice_face = user_input()
+  if dice_number == 0 or dice_face == 0:
+    continue
   max_roll, result, dice_pos, min_roll,add_roll = simple_roll ()
   if dice_option == "null" and roll_option == "null":
     print (f"il risultato di \033[47;30m{player_choice[0]}\033[0m e' {result}")
@@ -133,10 +136,11 @@ while True:
 
 ##debugging check variabili
 #print ("\n\n\n")
+print (player_choice_ris)
 #print ("dice_choice",dice_choice)
 #print ("dice_option",dice_option)
 #print ("roll_option",roll_option)
-#print ("player_choice",player_choice)
+print ("player_choice",player_choice)
 #if dice_number !=0:
 #  print (dice_number)
 #  print (dice_face)
