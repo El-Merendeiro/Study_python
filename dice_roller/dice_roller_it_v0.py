@@ -114,6 +114,7 @@ per uscire dalla modalita' risiko: \033[47;30mexit\033[0m\n\n")
     player_choice_ris = input ("︻デ┳═ー ").lower ().split ()
     if "exit" in player_choice_ris:
       print ("uscita risiko")
+      print ("sei tornato nella modalita mista")
       return
     if "help" in player_choice_ris:
       show_help_ris ()
