@@ -26,23 +26,8 @@ def show_help_ris ():
 
 #definizione della funzione di input, user_input. check dell'input, split delle opzioni, e split secondario del numeero di dadi/numero di facce
 def user_input ():
-#variabili secondarie
-  dice_number = 0
-  dice_face = 0
-#main input
   while True:
     player_choice = input (">>---> ").lower ().split () #main split
-#gestione comando exit
-    if "exit" in player_choice:
-      print("Uscita dal programma. Arrivederci!")
-      exit()
-    if "risiko" in player_choice:
-      print ("modalita risiko")
-      risiko_input ()
-      continue
-    if "help" in player_choice:
-      show_help ()
-      continue
 #check numero parole e aggiunta se mancano
     if len(player_choice) == 1:
       player_choice.append ("null")
@@ -54,14 +39,15 @@ def user_input ():
       continue
 #check massimo 3 parole e massimo 3 caratteri
 #check opzioni
-    if len(player_choice) > 3\
-or len(player_choice[0]) < 3\
-or player_choice[1] not in list_dice_option\
-or player_choice[2] not in list_roll_option:
+    dice_choice,dice_option,roll_option = player_choice
+    if dice_choice in mode:
+      return dice_choice,dice_option,roll_option,player_choice
+    if len(dice_choice) < 3\
+or dice_option not in list_dice_option\
+or roll_option not in list_roll_option:
       print ("Hai digitato qualcosa di sbagliato,\nricontrolla le opzioni nella guida digitando \033[47;30mhelp\033[0m.")
       continue
 #check caratteri e opzioni, assegnazione varibili opzioni e split secondario di dice_choice
-    dice_choice,dice_option,roll_option = player_choice
     if "d" not in dice_choice:
       print (f"\033[47;30m{dice_choice}\033[0m non e' una scelta valida,\nesempio: per lanciare 2 dadi da 6 facce digita \033[47;30m2d6\033[0m.\nPer la guida digita \033[47;30mhelp\033[0m.")
       continue
@@ -70,11 +56,7 @@ or player_choice[2] not in list_roll_option:
 or not dice_choice[1].isdigit():
       print (f"Hai digitato una scelta non valida,\nesempi validi: 2d6, 3d8, 1d100.\nPer la guida digita \033[47;30mhelp\033[0m ")
       continue
-    else:
-      dice_number = int(dice_choice [0])
-      dice_face = int(dice_choice [1])
-      break
-  return dice_choice, dice_option, roll_option, player_choice, dice_number, dice_face
+    return dice_choice,dice_option,roll_option,player_choice
 #fine input
 
 #definizione funzione roll
@@ -100,7 +82,7 @@ def simple_roll ():
   return max_roll,result,dice_pos, min_roll, add_roll
 #fine roll
 
-#input eroll per risiko
+#input per risiko
 def risiko_input ():
   print ("\n\nBenvenuto nella modalita Risiko di \033[1;41;37mRolly\033[0m\n\n\
 Digita il numero di dadi dell'attaccante (red),\n\
@@ -114,7 +96,9 @@ per uscire dalla modalita' risiko: \033[47;30mexit\033[0m\n\n")
     if "exit" in player_choice_ris:
       print ("uscita risiko")
       print ("sei tornato nella modalita mista")
-      return
+      red_dice = 0
+      blue_dice = 0
+      return red_dice,blue_dice
     if "help" in player_choice_ris:
       show_help_ris ()
       continue
@@ -134,18 +118,38 @@ per uscire dalla modalita' risiko: \033[47;30mexit\033[0m\n\n")
     blue_dice = int(blue_dice[1])
     if red_dice > 3 or blue_dice > 3:
       print ("puoi lanciare massimo 3 dadi a player")
-      return red_dice,blue_dice
       continue
-#fine input risiko
-    print (red_dice)
-    print (blue_dice)
+    return red_dice, blue_dice
+
+def risiko_roll ():
+  dice_pos_ris = [1,2,3,4,5,6]
+  result_red = [random.choice (dice_pos_ris) for _ in range (red_dice)]
+  result_blue = [random.choice (dice_pos_ris) for _ in range (blue_dice)]
+
  # dice_pos =[]
   #  for t in range (1,dice_face+1):
    # dice_pos += [t]
   #result = [random.choice (dice_pos) for _ in r
 #main output
+
 while True:
-  dice_choice, dice_option, roll_option, player_choice, dice_number, dice_face = user_input()
+  dice_choice, dice_option, roll_option, player_choice = user_input()
+  if "exit" in player_choice:
+      print("Uscita dal programma. Arrivederci!")
+      exit()
+  if "help" in player_choice:
+      show_help ()
+      continue
+  while dice_choice == "risiko":
+    print ("modalita risiko")
+    red_dice, blue_dice = risiko_input ()
+    print (red_dice,blue_dice)
+    dice_choice = "Null"
+  if dice_choice == "Null":
+    continue
+#    result_red, result_blue = risiko_roll ()
+  dice_number = int(dice_choice[0])
+  dice_face = int(dice_choice[1])
   max_roll, result, dice_pos, min_roll,add_roll = simple_roll ()
   if dice_option == "null" and roll_option == "null":
     print (f"il risultato di \033[47;30m{player_choice[0]}\033[0m e' {result}")
