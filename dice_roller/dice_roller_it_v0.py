@@ -134,6 +134,7 @@ per uscire dalla modalita' risiko: \033[47;30mexit\033[0m\n\n")
     blue_dice = int(blue_dice[1])
     if red_dice > 3 or blue_dice > 3:
       print ("puoi lanciare massimo 3 dadi a player")
+      return red_dice,blue_dice
       continue
 #fine input risiko
     print (red_dice)
