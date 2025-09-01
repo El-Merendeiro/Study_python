@@ -84,13 +84,6 @@ def simple_roll ():
 
 #input per risiko
 def risiko_input ():
-  print ("\n\nBenvenuto nella modalita Risiko di \033[1;41;37mRolly\033[0m\n\n\
-Digita il numero di dadi dell'attaccante (red),\n\
-seguito dal numero di dadi del difensore (blue).\
-Esempio: \033[47;30mred3 blue2\033[0m 3 dadi per l'attaccante e 2 per il difensore\n\
-Opzioni digita: \033[47;30mhelp\033[0m, \
-per uscire dalla modalita' risiko: \033[47;30mexit\033[0m\n\n")
-
   while True:
     player_choice_ris = input ("︻デ┳═ー ").lower ().split ()
     if "exit" in player_choice_ris:
@@ -125,12 +118,7 @@ def risiko_roll ():
   dice_pos_ris = [1,2,3,4,5,6]
   result_red = [random.choice (dice_pos_ris) for _ in range (red_dice)]
   result_blue = [random.choice (dice_pos_ris) for _ in range (blue_dice)]
-
- # dice_pos =[]
-  #  for t in range (1,dice_face+1):
-   # dice_pos += [t]
-  #result = [random.choice (dice_pos) for _ in r
-#main output
+  return result_red, result_blue
 
 while True:
   dice_choice, dice_option, roll_option, player_choice = user_input()
@@ -140,14 +128,25 @@ while True:
   if "help" in player_choice:
       show_help ()
       continue
+  if "risiko" in player_choice:
+    print ("\n\nBenvenuto nella modalita Risiko di \033[1;41;37mRolly\033[0m\n\n\
+Digita il numero di dadi dell'attaccante (red),\n\
+seguito dal numero di dadi del difensore (blue).\
+Esempio: \033[47;30mred3 blue2\033[0m 3 dadi per l'attaccante e 2 per il difensore\n\
+Opzioni digita: \033[47;30mhelp\033[0m, \
+per uscire dalla modalita' risiko: \033[47;30mexit\033[0m\n\n")
+
   while dice_choice == "risiko":
     print ("modalita risiko")
     red_dice, blue_dice = risiko_input ()
+    result_red, result_blue = risiko_roll ()
     print (red_dice,blue_dice)
-    dice_choice = "Null"
+    print (result_red,result_blue)
+    if red_dice == 0 and blue_dice==0:
+      dice_choice = "Null"
   if dice_choice == "Null":
     continue
-#    result_red, result_blue = risiko_roll ()
+
   dice_number = int(dice_choice[0])
   dice_face = int(dice_choice[1])
   max_roll, result, dice_pos, min_roll,add_roll = simple_roll ()
