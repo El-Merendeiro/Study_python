@@ -118,6 +118,42 @@ def risiko_roll ():
   dice_pos_ris = [1,2,3,4,5,6]
   result_red = [random.choice (dice_pos_ris) for _ in range (red_dice)]
   result_blue = [random.choice (dice_pos_ris) for _ in range (blue_dice)]
+  result_red.sort ()
+  result_blue.sort ()
+  lost_red = 0
+  lost_blue = 0
+#3vs3
+  if len(result_red) == 3 and len(result_blue)==3:
+    if result_blue[2] >= result_red[2]:
+      lost_red += 1
+    else:
+      lost_blue +=1
+    if result_blue[1] >= result_red[1]:
+      lost_red +=1
+    else:
+      lost_blue += 1
+    if result_blue[0] >= result_red[0]:
+      lost_red +=1
+    else:
+      lost_blue += 1
+#3vs2
+  if len(result_red) == 3 and len(result_blue)==2:
+    
+
+  if len(result_red) ==3 and len(result_blue)==1:
+#3vs1
+  if len(result_red) ==2 and len(result_blue) ==3:
+#2vs3
+  if len(result_red) ==1 and len(result_blue) ==3:
+#1vs3
+  if len(result_red) ==2 and len(result_blue)==2:
+#2vs2
+  if len(result_red) ==1 and len(result_blue)==1:
+#2vs1
+  if len(result_red) ==1 and len(result_blue==2:
+#1vs2
+  if len(resul_red) ==1 and len(resul_blue) ==1:
+#1vs1
   return result_red, result_blue
 
 while True:
