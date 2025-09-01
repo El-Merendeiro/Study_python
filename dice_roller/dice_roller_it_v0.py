@@ -38,7 +38,7 @@ def user_input ():
       exit()
     if "risiko" in player_choice:
       print ("modalita risiko")
-      risiko_roll ()
+      risiko_input ()
       continue
     if "help" in player_choice:
       show_help ()
@@ -101,7 +101,7 @@ def simple_roll ():
 #fine roll
 
 #input eroll per risiko
-def risiko_roll ():
+def risiko_input ():
   print ("\n\nBenvenuto nella modalita Risiko di \033[1;41;37mRolly\033[0m\n\n\
 Digita il numero di dadi dell'attaccante (red),\n\
 seguito dal numero di dadi del difensore (blue).\
@@ -110,7 +110,6 @@ Opzioni digita: \033[47;30mhelp\033[0m, \
 per uscire dalla modalita' risiko: \033[47;30mexit\033[0m\n\n")
 
   while True:
-    dice_pos_ris = [1,2,3,4,5,6]
     player_choice_ris = input ("︻デ┳═ー ").lower ().split ()
     if "exit" in player_choice_ris:
       print ("uscita risiko")
@@ -119,6 +118,26 @@ per uscire dalla modalita' risiko: \033[47;30mexit\033[0m\n\n")
     if "help" in player_choice_ris:
       show_help_ris ()
       continue
+    if len(player_choice_ris) < 2 or len(player_choice_ris) >2:
+      print ("riprova")
+      continue
+    red_dice , blue_dice = player_choice_ris
+    if "red" not in red_dice or "blue" not in blue_dice:
+      print ("Hai sbagliato qualcosa, digita red3 blue3")
+      continue
+    if len(red_dice) > 4 or len(blue_dice) > 5:
+      print ("sbagliato riprova")
+      continue
+    red_dice = red_dice.split("red")
+    red_dice = int(red_dice[1])
+    blue_dice = blue_dice.split("blue")
+    blue_dice = int(blue_dice[1])
+    if red_dice > 3 or blue_dice > 3:
+      print ("puoi lanciare massimo 3 dadi a player")
+      continue
+#fine input risiko
+    print (red_dice)
+    print (blue_dice)
  # dice_pos =[]
   #  for t in range (1,dice_face+1):
    # dice_pos += [t]
