@@ -109,8 +109,8 @@ def risiko_input ():
     red_dice = int(red_dice[1])
     blue_dice = blue_dice.split("blue")
     blue_dice = int(blue_dice[1])
-    if red_dice > 3 or blue_dice > 3:
-      print ("puoi lanciare massimo 3 dadi a player")
+    if red_dice > 3 or blue_dice > 3 or red_dice < 1 or blue_dice < 1:
+      print ("puoi lanciare massimo 3 e minimo 1 dado a player")
       continue
     return red_dice, blue_dice
 
@@ -122,39 +122,14 @@ def risiko_roll ():
   result_blue.sort ()
   lost_red = 0
   lost_blue = 0
-#3vs3
-  if len(result_red) == 3 and len(result_blue)==3:
-    if result_blue[2] >= result_red[2]:
-      lost_red += 1
-    else:
-      lost_blue +=1
-    if result_blue[1] >= result_red[1]:
-      lost_red +=1
-    else:
-      lost_blue += 1
-    if result_blue[0] >= result_red[0]:
-      lost_red +=1
-    else:
-      lost_blue += 1
-#3vs2
-  if len(result_red) == 3 and len(result_blue)==2:
-    
+  max_compare = min(red_dice,blue_dice)
 
-  if len(result_red) ==3 and len(result_blue)==1:
-#3vs1
-  if len(result_red) ==2 and len(result_blue) ==3:
-#2vs3
-  if len(result_red) ==1 and len(result_blue) ==3:
-#1vs3
-  if len(result_red) ==2 and len(result_blue)==2:
-#2vs2
-  if len(result_red) ==1 and len(result_blue)==1:
-#2vs1
-  if len(result_red) ==1 and len(result_blue==2:
-#1vs2
-  if len(resul_red) ==1 and len(resul_blue) ==1:
-#1vs1
-  return result_red, result_blue
+  for g in range(1,max_compare+1):
+    if result_blue[-g] >= result_red[-g]:
+      lost_red+=1
+    else:
+      lost_blue+=1
+  return lost_red, lost_blue, result_red, result_blue, max_compare
 
 while True:
   dice_choice, dice_option, roll_option, player_choice = user_input()
@@ -173,16 +148,19 @@ Opzioni digita: \033[47;30mhelp\033[0m, \
 per uscire dalla modalita' risiko: \033[47;30mexit\033[0m\n\n")
 
   while dice_choice == "risiko":
-    print ("modalita risiko")
     red_dice, blue_dice = risiko_input ()
-    result_red, result_blue = risiko_roll ()
-    print (red_dice,blue_dice)
-    print (result_red,result_blue)
+    lost_red, lost_blue, result_red, result_blue, max_compare = risiko_roll ()
     if red_dice == 0 and blue_dice==0:
       dice_choice = "Null"
+    else:
+      print (f"\nnumero dadi attaccante: {red_dice}. Risultato: {result_red}\n\
+numero dadi difensore: {blue_dice}. Risultato: {result_blue}\n\
+numero scontri: {max_compare}.\n\
+cararmati persi dall'attaccante: {lost_red}.\n\
+cararmati persi dal difensore: {lost_blue}.\n\n")
   if dice_choice == "Null":
     continue
-
+  
   dice_number = int(dice_choice[0])
   dice_face = int(dice_choice[1])
   max_roll, result, dice_pos, min_roll,add_roll = simple_roll ()
