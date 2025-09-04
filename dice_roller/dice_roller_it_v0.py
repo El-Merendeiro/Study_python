@@ -1,13 +1,18 @@
 #questo sara' un dice roller per qualsiasi gioco da di ruolo o da tavola
 import random
 
+#messaggio benvenuto
+print(
+    "\n\nBenvenuto in \033[1;41;37mRolly\033[0m!\n\n"
+    "Digita il numero di dadi e il numero di facce.\n"
+    "Esempio: \033[47;30m3d6\033[0m  → tre dadi da sei facce.\n\n"
+    "Opzioni disponibili:\n"
+    "  • \033[47;30mhelp\033[0m  → mostra le istruzioni\n"
+    "  • \033[47;30mexit\033[0m  → esci dal programma\n\n"
+)
 
-print ("\n\nBenvenuto in \033[1;41;37mRolly\033[0m\n\n\
-Digita il numero di dadi e le facce.\nEsempio: \033[47;30m3d6\033[0m tre dadi da sei facce\n\
-Opzioni digita: \033[47;30mhelp\033[0m, \
-per uscire: \033[47;30mexit\033[0m\n\n")
 
-#variabili principali
+#variabili
 list_dice_option = ["null","max","min","add","notver"]
 list_roll_option = ["null","notver"]
 mode = ["help","exit","risiko"]
@@ -16,11 +21,26 @@ dice_option = ""
 roll_option = ""
 result =[]
 
-#definizione della funzione show_help e show_help_ris
-def show_help ():
-  print ("Digita il numero di dadi da lanciare,\n\
-seguito da 'd' e poi il numero di facce del dado")
+#definizione della funzione show_help
+def show_help():
+    print(
+        "\n\033[1;44;97m GUIDA COMANDI ROLLY \033[0m\n"
+        "\nDigita il numero di dadi da lanciare, "
+        "seguito da 'd' e dal numero di facce del dado.\n"
+        "Esempio: \033[47;30m3d6\033[0m → lancia 3 dadi a 6 facce.\n"
+        "\n\033[1;37mOpzioni disponibili:\033[0m\n"
+        "  • \033[36madd\033[0m      → Somma tutti i risultati dei dadi\n"
+        "  • \033[36mmax\033[0m      → Mostra solo il valore più alto\n"
+        "  • \033[36mmin\033[0m      → Mostra solo il valore più basso\n"
+        "  • \033[36mnotverb\033[0m  → Modalità silenziosa: nasconde i dettagli dei singoli lanci\n"
+        "      ⤷ Può essere combinata con \033[36madd\033[0m, \033[36mmax\033[0m o \033[36mmin\033[0m\n"
+        "\n\033[1;37mComandi generali:\033[0m\n"
+        "  • \033[36mhelp\033[0m    → Mostra questo messaggio\n"
+        "  • \033[36mrisiko\033[0m  → Attiva la modalità speciale per il gioco da tavolo Risiko\n"
+        "  • \033[36mexit\033[0m    → Esci dal programma\n"
+    )
 
+#definizione della funzione show_help_ris
 def show_help_ris ():
   print ("help di risiko")
 
