@@ -42,12 +42,26 @@ def show_help():
 
 #definizione della funzione show_help_ris
 def show_help_ris ():
-  print ("help di risiko")
+  print (
+        "\n\033[1;44;97m GUIDA MODALITÀ RISIKO \033[0m\n"
+        "\n\033[1;37mRegole base:\033[0m\n"
+        "  • L'attaccante può lanciare fino a 3 dadi rossi\n"
+        "  • Il difensore può lanciare fino a 3 dadi blu\n"
+        "  • I dadi vengono ordinati dal più alto al più basso\n"
+        "  • Si confrontano i dadi uno a uno:\n"
+        "      - Ogni dado dell'attaccante viene confrontato col corrispondente del difensore\n"
+        "      - In caso di parità vince sempre il difensore\n"
+        "\n\033[1;37mEsempi pratici:\033[0m\n"
+        "  • \033[47;30mred3\033[0m \033[47;30mblue2\033[0m →\n"
+        " L'attaccante attacca con 3 truppe, il difensore difende con 2.\n"
+        "\n\033[1;37mComandi disponibili in modalità Risiko:\033[0m\n"
+        "  • \033[36mhelp\033[0m     → Mostra questo messaggio\n"
+        "  • \033[36mexit\033[0m     → Torna alla modalità classica\n")
 
 #definizione della funzione di input, user_input. check dell'input, split delle opzioni, e split secondario del numeero di dadi/numero di facce
 def user_input ():
   while True:
-    player_choice = input (">>---> ").lower ().split () #main split
+    player_choice = input ("🎲 Roll> ").lower ().split () #main split
 #check numero parole e aggiunta se mancano
     if len(player_choice) == 1:
       player_choice.append ("null")
@@ -55,7 +69,7 @@ def user_input ():
     elif len(player_choice) == 2:
       player_choice.append ("null")
     elif len(player_choice) == 0:
-      print ("Digita \033[47;30mhelp\033[0m per aiuto")
+      print ("\n Non hai lanciato nulla!\n Digita \033[47;30mhelp\033[0m per i comandi disponibili.\n")
       continue
 #check massimo 3 parole e massimo 3 caratteri
 #check opzioni
@@ -65,16 +79,16 @@ def user_input ():
     if len(dice_choice) < 3\
 or dice_option not in list_dice_option\
 or roll_option not in list_roll_option:
-      print ("Hai digitato qualcosa di sbagliato,\nricontrolla le opzioni nella guida digitando \033[47;30mhelp\033[0m.")
+      print ("\n Hai digitato qualcosa di sbagliato,\nricontrolla le opzioni nella guida. \ndigita \033[47;30mhelp\033[0m.\n")
       continue
 #check caratteri e opzioni, assegnazione varibili opzioni e split secondario di dice_choice
     if "d" not in dice_choice:
-      print (f"\033[47;30m{dice_choice}\033[0m non e' una scelta valida,\nesempio: per lanciare 2 dadi da 6 facce digita \033[47;30m2d6\033[0m.\nPer la guida digita \033[47;30mhelp\033[0m.")
+      print (f"\n\033[47;30m{dice_choice}\033[0m non e' una scelta valida,\n esempio:\n per lanciare 2 dadi da 6 facce digita \033[47;30m2d6\033[0m.\nPer la guida digita \033[47;30mhelp\033[0m.\n")
       continue
     dice_choice = dice_choice.split ("d") #split secondario
     if not dice_choice[0].isdigit()\
 or not dice_choice[1].isdigit():
-      print (f"Hai digitato una scelta non valida,\nesempi validi: 2d6, 3d8, 1d100.\nPer la guida digita \033[47;30mhelp\033[0m ")
+      print (f"\nHai digitato una scelta non valida,\nesempi validi: 2d6, 3d8, 1d100.\nPer la guida digita \033[47;30mhelp\033[0m \n")
       continue
     return dice_choice,dice_option,roll_option,player_choice
 #fine input
@@ -105,7 +119,7 @@ def simple_roll ():
 #input per risiko
 def risiko_input ():
   while True:
-    player_choice_ris = input ("︻デ┳═ー ").lower ().split ()
+    player_choice_ris = input ("⚔️ 🎲 🛡️ Roll>").lower ().split ()
     if "exit" in player_choice_ris:
       print ("uscita risiko")
       print ("sei tornato nella modalita mista")
