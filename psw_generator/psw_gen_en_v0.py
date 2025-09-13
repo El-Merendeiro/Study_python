@@ -22,6 +22,9 @@ def mode_input ():
     if mode_select == "help":
       show_help ()
       continue
+    elif mode_select == "exit":
+      print ("good bye")
+      exit ()
     if mode_select == "auto" or mode_select == "user":
       return mode_select
     print ("invalid input.")
@@ -33,6 +36,12 @@ def auto_input ():
   while True:
     level_select = input ("Chose password's security level:\n"
 "weak, normal, strong, very strong -> ").lower ()
+    if level_select == "help":
+      show_help ()
+      continue
+    elif level_select == "exit":
+      print ("good bye")
+      exit ()
     if level_select in level:
       return level_select
     print ("invalid input")
@@ -46,6 +55,12 @@ def auto_input ():
 def ask_y_n (question):
   while True:
     user_select = input (question).lower ()
+    if user_select == "help":
+      show_help ()
+      continue
+    elif user_select == "exit":
+      print ("good bye")
+      exit ()
     if user_select == "yes" or user_select == "y":
       return True
     elif user_select =="no" or user_select == "n":
@@ -58,6 +73,12 @@ def ask_y_n (question):
 def user_input ():
   while True:
     lenght_select = input ("How many carachters your password should be? type a number -> ")
+    if lenght_select == "help":
+      show_help ()
+      continue
+    elif lenght_select == "exit":
+      print ("good bye")
+      exit ()
     if not lenght_select.isdigit():
       print ("type a valid nunmber")
       continue
