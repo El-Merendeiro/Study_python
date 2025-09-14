@@ -1,25 +1,30 @@
+#password generator 2025.9.11
+print("""
+\033[1;36mThis is a Password Generator\033[0m\n
+There are two modes to create your password:\n
+\033[1;33mAuto Mode:\033[0m
+  Your password will be generated automatically.
+  You only need to choose the security level:
+  \033[32mweak, medium, strong, very strong\033[0m\n
+\033[1;33mUser Mode:\033[0m
+  You will decide all the options for your password:
+  - Length
+  - Alphabet
+  - Alphanumeric
+  - Special characters
+  - Capital letters or not\n
+Type \033[35m'help'\033[0m for more information.
+Type \033[35m'exit'\033[0m to quit.
+""")
+
 import string
 import random
-
-
-#password generator 2025.9.11
-print ("\n\nThis is a password generator, \n"
-"there are 2 mode to create your password,\n\n"
- "Auto mode:\n"
-  "Your password will be genereted automaticaly,\n"
-  "you need choose only the level of security\n"
-  "(weak, medium, strong, very strong)\n\n"
- "User mode:\n"
-  "You will choose all option for your password\n"
-  "(lenght, alphabet, alphanumeric, special caracter, capital or not)\n\n"
-"Type: 'help' for more info\n\n")
 
 #help
 def show_help ():
   print ("this is help")
 
-#input
-#mode input
+#mode input select
 def mode_input ():
   while True:
     mode_select = input ("Choose your password genration mode: Auto/User -> ").lower ()
@@ -34,12 +39,12 @@ def mode_input ():
     print ("invalid input.")
     continue
 
-#auto input option
+#auto mode, input security level select
 def auto_input ():
-  level = ["weak","normal","strong","very strong"]
+  level = ["weak","medium","strong","very strong"]
   while True:
     level_select = input ("Chose password's security level:\n"
-"weak, normal, strong, very strong -> ").lower ()
+"weak, medium, strong, very strong -> ").lower ()
     if level_select == "help":
       show_help ()
       continue
@@ -51,9 +56,7 @@ def auto_input ():
     print ("invalid input")
     continue
 
-
-
-#user input option
+#user mode, input ask yes or no
 def ask_y_n (question):
   while True:
     user_select = input (question).lower ()
@@ -71,10 +74,10 @@ def ask_y_n (question):
       print ("invalid input")
       continue
 
-
+#user mode, input password lenght
 def user_input ():
   while True:
-    lenght_select = input ("How many carachters your password should be? type a number -> ")
+    lenght_select = input ("How many characters your password should be? type a number -> ")
     if lenght_select == "help":
       show_help ()
       continue
@@ -90,39 +93,44 @@ def user_input ():
       continue
     return lenght_select
 
-#main
-mode_select = mode_input()
-if mode_select == "auto":
-  level_select = auto_input ()
-elif mode_select == "user":
-  lenght_select = user_input ()
-  characters_select = ask_y_n ("Do you want include letters in your password? y/n ")
-  capital_select = ask_y_n ("Do you want include CAPITAL characters in your password?")
-  special_select = ask_y_n ("Do you want include special characters inyour password? y/n")
-
-def auto_generator (level_select):
-  weak_list = list(range(0,10))
-  normal_list = list(string.ascii_lowercase)+weak_list
-  strong_list = list(string.ascii_uppercase)+normal_list+weak_list
-  very_strong_list = list(string.punctuation)+strong_list+normal_list+weak_list
+#auto mode, password generator
+def auto_generator ():
+  weak_list = list(string.digits)
+  medium_list = list(string.ascii_lowercase)+weak_list
+  strong_list = list(string.ascii_uppercase)+medium_list+weak_list
+  very_strong_list = list(string.punctuation)+strong_list+medium_list+weak_list
   choose_list = level_select
   if choose_list == "weak":
     auto_list = weak_list
     auto_lenght = 8
-  elif choose_list == "normal":
-    auto_list = normal_list
+  elif choose_list == "medium":
+    auto_list = medium_list
     auto_lenght = 12
   elif choose_list == "strong":
     auto_list = strong_list
     auto_lenght = 16
-  elif choose_list == "very_strong":
+  elif choose_list == "very strong":
     auto_list = very_strong_list
     auto_lenght = 20
-
-  password = [random.chooise (auto_list) for _ in range(auto_lenght+1)]
+  password = [random.choice (auto_list) for _ in range(auto_lenght+1)]
+  password = "".join (password)
   return password
 
-level_select = auto_input ()
-print (auto_generator (password))
 
+
+
+
+#main
+mode_select = mode_input()
+if mode_select == "auto":
+  level_select = auto_input ()
+  password = auto_generator ()
+elif mode_select == "user":
+  lenght_select = user_input ()
+  characters_select = ask_y_n ("Include letters in your password? y/n ")
+  capital_select = ask_y_n ("Include uppercase characters in your password? y/n ")
+  special_select = ask_y_n ("Include special characters in your password? y/n ")
+
+
+print (password)
 print (mode_select)
