@@ -19,6 +19,11 @@ Type \033[35m'exit'\033[0m to quit.
 
 import string
 import random
+import secrets
+weak_list = list(string.digits)
+medium_list = list(string.ascii_lowercase)
+strong_list = list(string.ascii_uppercase)
+very_strong_list = list(string.punctuation)
 
 #help
 def show_help ():
@@ -95,30 +100,36 @@ def user_input ():
 
 #auto mode, password generator
 def auto_generator ():
-  weak_list = list(string.digits)
-  medium_list = list(string.ascii_lowercase)+weak_list
-  strong_list = list(string.ascii_uppercase)+medium_list+weak_list
-  very_strong_list = list(string.punctuation)+strong_list+medium_list+weak_list
   choose_list = level_select
   if choose_list == "weak":
     auto_list = weak_list
     auto_lenght = 8
   elif choose_list == "medium":
-    auto_list = medium_list
+    auto_list = medium_list+weak_list
     auto_lenght = 12
   elif choose_list == "strong":
-    auto_list = strong_list
+    auto_list = strong_list+medium_list+weak_list
     auto_lenght = 16
   elif choose_list == "very strong":
-    auto_list = very_strong_list
+    auto_list = very_strong_list+strong_list+medium_list+weak_list
     auto_lenght = 20
-  password = [random.choice (auto_list) for _ in range(auto_lenght+1)]
+  password = [secrets.choice (auto_list) for _ in range(auto_lenght)]
   password = "".join (password)
   return password
 
-
-
-
+#user generator
+def user_generator () :
+  user_lenght = lenght_select
+  user_list = weak_list
+  if characters_select:
+    user_list += medium_list
+  if capital_select:
+    user_list += strong_list
+  if special_select:
+    user_list += very_strong_list
+  password = [secrets.choice (user_list) for _ in range(user_lenght)]
+  password = "".join (password)
+  return password
 
 #main
 mode_select = mode_input()
@@ -130,7 +141,7 @@ elif mode_select == "user":
   characters_select = ask_y_n ("Include letters in your password? y/n ")
   capital_select = ask_y_n ("Include uppercase characters in your password? y/n ")
   special_select = ask_y_n ("Include special characters in your password? y/n ")
-
+  password = user_generator ()
 
 print (password)
 print (mode_select)
