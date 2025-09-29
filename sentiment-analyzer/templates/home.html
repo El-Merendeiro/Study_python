@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <title>Sentiment Analyzer</title>
+</head>
+<body>
+    <h1>ようこそアイフォン１７Sentiment-analyzer</h1>
+    <form method="POST">
+        <label for="comment">ここに口コミ入れてください:</label><br>
+        <textarea id="comment" name="comment" rows="4" cols="50"></textarea><br>
+
+        <!--　　　　　　口コミ保存 　　　　　　　　-->
+        <input type="checkbox" id="save" name="save">
+        <label for="save">口コミ保存</label><br><br>
+        
+        <input type="submit" value="Analyze">
+     </form>
+     {% if sentiment_label and sentiment_score %}
+        <h2>結果 / Result:</h2>
+        <p>ラベル / Label: {{ sentiment_label }}</p>
+        <p>信頼度 / Score: {{ sentiment_score }}</p>
+     {% endif %}
+</body>
+</html>
