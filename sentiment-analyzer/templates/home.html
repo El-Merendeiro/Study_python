@@ -17,9 +17,9 @@
         <input type="submit" value="Analyze">
      </form>
      {% if sentiment_label and sentiment_score %}
-        <h2>結果 / Result:</h2>
-        <p>ラベル / Label: {{ sentiment_label }}</p>
-        <p>信頼度 / Score: {{ sentiment_score }}</p>
+        <h2>結果:</h2>
+        <p>ラベル: {{ sentiment_label }}</p>
+        <p>信頼度: {{ sentiment_score }}</p>
      {% endif %}
 </body>
 </html>
