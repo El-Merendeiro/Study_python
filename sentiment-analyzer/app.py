@@ -3,12 +3,19 @@
 
 from flask import Flask, request, render_template
 from transformers import pipeline
+from config import REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, REDDIT_USER_AGENT
+import praw
 
-# Variabili globali
+# Variabile
 comments_list = []
 sentiment_label_list = []
 sentiment_score_list = []
 sentiment_analyzer = pipeline("sentiment-analysis")
+
+reddit = praw.Reddit(\
+client_id=REDDIT_CLIENT_ID,\
+client_secret=REDDIT_CLIENT_SECRET,\
+user_agent=REDDIT_USER_AGENT)
 
 app = Flask(__name__)
 
@@ -38,6 +45,22 @@ def comments_page():
                            comments_list=comments_list,
                            sentiment_label_list=sentiment_label_list,
                            sentiment_score_list=sentiment_score_list)
+
+
+def get_top_comments(product_name, limit=100):
+  query = product_name
+  reddit_comment = []
+
+
+  for submission in reddit.subreddit("all").search(query, limit=10, sort="top"):
+    submission.comments.replace_more(limit=0)  # evita placeholder
+    for comment in submission.comments.list():
+      reddit_comment.append({"body": comment.body, "score": comment.score})
+  reddit_comment = sorted(reddit_comment, key=lambda x: x["score"], reverse=True)
+
+
+  return reddit_comment[:limit]
+
 
 
 if __name__ == '__main__':

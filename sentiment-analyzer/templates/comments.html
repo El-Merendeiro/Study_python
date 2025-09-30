@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="ja">
 <head>
   <meta charset="utf-8" />
-  <title>Commenti analizzati - iPhone 17</title>
+  <title>保存したコメント</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <!-- Chart.js CDN (versione compatta) -->
+  <!-- Chart.js CDN (軽量版) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding: 20px; }
@@ -16,35 +16,35 @@
   </style>
 </head>
 <body>
-  <h1>Commenti salvati e sentiment</h1>
+  <h1>保存したコメント＆感情分析</h1>
 
   {% if comments_list and sentiment_label_list %}
   <div class="chart-container">
     <canvas id="sentimentChart" width="700" height="200"></canvas>
   </div>
   {% else %}
-    <p>Nessun commento salvato.</p>
+    <p>コメントがまだありません</p>
   {% endif %}
 
-  <h2>Elenco commenti</h2>
+  <h2>保存したコメント一覧</h2>
   <div id="commentsArea">
     {% if comments_list %}
       {% for i in range(comments_list|length) %}
         <div class="list-item">
-          <div><strong>Commento:</strong> {{ comments_list[i] }}</div>
+          <div><strong>コメント:</strong> {{ comments_list[i] }}</div>
           <div class="meta">
-            <strong>Sentiment:</strong> {{ sentiment_label_list[i] }} &nbsp;|&nbsp;
-            <strong>Score:</strong> {{ (sentiment_score_list[i] if sentiment_score_list[i] is not none else 0)|round(3) }}
+            <strong>ラベル:</strong> {{ sentiment_label_list[i] }} &nbsp;|&nbsp;
+            <strong>信頼度:</strong> {{ (sentiment_score_list[i] if sentiment_score_list[i] is not none else 0)|round(3) }}
           </div>
         </div>
       {% endfor %}
     {% endif %}
   </div>
 
-  <a href="/">◀ Torna alla home</a>
+  <a href="/">ホームに戻る</a>
 
   <script>
-    // Costruisco l'array JS dai tre array passati dal server (sicuro usando tojson per ogni elemento)
+    // サーバーから渡された3つの配列を使ってJSの配列を作成
     const comments = [];
     {% for i in range(comments_list|length) %}
     comments.push({
@@ -54,7 +54,7 @@
     });
     {% endfor %}
 
-    // Calcolo contatori
+    // カウント処理
     let positiveCount = 0;
     let negativeCount = 0;
     let neutralCount = 0;
@@ -65,36 +65,36 @@
       else neutralCount++;
     }
 
-    // Se non ci sono commenti, non disegno il grafico
+    // コメントが存在する場合のみグラフを描画
     if (comments.length > 0) {
       const ctx = document.getElementById('sentimentChart').getContext('2d');
 
-      // Grafico a barre orizzontali (indexAxis: 'y')
+      // 横棒グラフ (indexAxis: 'y')
       const chart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['Positive', 'Negative', 'Neutral'],
+          labels: ['ポジティブ', 'ネガティブ', 'ニュートラル'],
           datasets: [{
-            label: 'Numero commenti',
+            label: 'コメント数',
             data: [positiveCount, negativeCount, neutralCount],
-            // colori minimi per chiarezza
+            // バーの色設定
             backgroundColor: [
-              'rgba(75, 192, 192, 0.7)',
-              'rgba(255, 99, 132, 0.7)',
-              'rgba(201, 203, 207, 0.7)'
+              'rgba(75, 192, 192, 0.7)',   // 緑系
+              'rgba(255, 99, 132, 0.7)',   // 赤系
+              'rgba(201, 203, 207, 0.7)'   // グレー
             ],
             borderWidth: 0
           }]
         },
         options: {
-          indexAxis: 'y', // rende le barre orizzontali
+          indexAxis: 'y', // 横棒にする
           scales: {
             x: { beginAtZero: true, ticks: { precision: 0 } }
           },
           responsive: true,
           plugins: {
-            legend: { display: false },
-            tooltip: { enabled: true }
+            legend: { display: false },   // 凡例を非表示
+            tooltip: { enabled: true }    // ツールチップを有効化
           }
         }
       });
