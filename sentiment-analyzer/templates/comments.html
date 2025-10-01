@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <title>保存したコメント</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <!-- Chart.js CDN (軽量版) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding: 20px; }
@@ -18,7 +17,16 @@
 <body>
   <h1>保存したコメント＆感情分析</h1>
 
-  {% if comments_list and sentiment_label_list %}
+  {% set comments_data = [] %}
+  {% for i in range(comments_list|length) %}
+    {% set _ = comments_data.append({
+        'comment': comments_list[i] or "",
+        'label': sentiment_label_list[i] or "N/A",
+        'score': sentiment_score_list[i] or 0
+    }) %}
+  {% endfor %}
+
+  {% if comments_data %}
   <div class="chart-container">
     <canvas id="sentimentChart" width="700" height="200"></canvas>
   </div>
@@ -28,74 +36,54 @@
 
   <h2>保存したコメント一覧</h2>
   <div id="commentsArea">
-    {% if comments_list %}
-      {% for i in range(comments_list|length) %}
-        <div class="list-item">
-          <div><strong>コメント:</strong> {{ comments_list[i] }}</div>
-          <div class="meta">
-            <strong>ラベル:</strong> {{ sentiment_label_list[i] }} &nbsp;|&nbsp;
-            <strong>信頼度:</strong> {{ (sentiment_score_list[i] if sentiment_score_list[i] is not none else 0)|round(3) }}
-          </div>
+    {% for c in comments_data %}
+      <div class="list-item">
+        <div><strong>コメント:</strong> {{ c.comment }}</div>
+        <div class="meta">
+          <strong>ラベル:</strong> {{ c.label }} &nbsp;|&nbsp;
+          <strong>信頼度:</strong> {{ c.score | round(3) }}
         </div>
-      {% endfor %}
-    {% endif %}
+      </div>
+    {% endfor %}
   </div>
 
   <a href="/">ホームに戻る</a>
 
   <script>
-    // サーバーから渡された3つの配列を使ってJSの配列を作成
-    const comments = [];
-    {% for i in range(comments_list|length) %}
-    comments.push({
-      comment: {{ comments_list[i] | tojson }},
-      label:   {{ sentiment_label_list[i] | tojson }},
-      score:   {{ sentiment_score_list[i] | default(0) | tojson }}
-    });
-    {% endfor %}
-
-    // カウント処理
+    const comments = {{ comments_data | tojson }};
     let positiveCount = 0;
     let negativeCount = 0;
     let neutralCount = 0;
+
     for (const c of comments) {
-      const lab = (c.label || "").toString().toUpperCase();
+      const lab = (c.label || "").toUpperCase();
       if (lab === "POSITIVE" || lab === "POS") positiveCount++;
       else if (lab === "NEGATIVE" || lab === "NEG") negativeCount++;
       else neutralCount++;
     }
 
-    // コメントが存在する場合のみグラフを描画
     if (comments.length > 0) {
       const ctx = document.getElementById('sentimentChart').getContext('2d');
-
-      // 横棒グラフ (indexAxis: 'y')
-      const chart = new Chart(ctx, {
+      new Chart(ctx, {
         type: 'bar',
         data: {
           labels: ['ポジティブ', 'ネガティブ', 'ニュートラル'],
           datasets: [{
             label: 'コメント数',
             data: [positiveCount, negativeCount, neutralCount],
-            // バーの色設定
             backgroundColor: [
-              'rgba(75, 192, 192, 0.7)',   // 緑系
-              'rgba(255, 99, 132, 0.7)',   // 赤系
-              'rgba(201, 203, 207, 0.7)'   // グレー
+              'rgba(75, 192, 192, 0.7)',
+              'rgba(255, 99, 132, 0.7)',
+              'rgba(201, 203, 207, 0.7)'
             ],
             borderWidth: 0
           }]
         },
         options: {
-          indexAxis: 'y', // 横棒にする
-          scales: {
-            x: { beginAtZero: true, ticks: { precision: 0 } }
-          },
+          indexAxis: 'y',
+          scales: { x: { beginAtZero: true, ticks: { precision: 0 } } },
           responsive: true,
-          plugins: {
-            legend: { display: false },   // 凡例を非表示
-            tooltip: { enabled: true }    // ツールチップを有効化
-          }
+          plugins: { legend: { display: false }, tooltip: { enabled: true } }
         }
       });
     }
