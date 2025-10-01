@@ -38,7 +38,8 @@ def comments_page():
   return render_template('comments.html', comments_list=comments_list, sentiment_label_list=sentiment_label_list, sentiment_score_list=sentiment_score_list)
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
+  import os
+  port = int(os.environ.get("PORT", 8080))
+  app.run(host="0.0.0.0", port=port)
 
 
