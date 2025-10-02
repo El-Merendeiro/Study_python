@@ -1,6 +1,6 @@
 ##Sentiment-analyzer　2025/9/29
-##アイフォン１７について、Redditから口コミを集めて、ポジティブかネガティブか確認
 
+#library
 from flask import Flask, request, render_template
 from transformers import pipeline
 
